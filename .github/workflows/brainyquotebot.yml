@@ -2,7 +2,7 @@ name: brainyquotebot
 
 on:
   schedule:
-    - cron: '42 0/2 * * *'  # once every two hours
+    - cron: '36 * * * *'  # once every two hours
     
 jobs:
   brainyquotebot-tweet:
