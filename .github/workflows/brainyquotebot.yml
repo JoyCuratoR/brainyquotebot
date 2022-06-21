@@ -16,6 +16,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - name: Install rtweet package
-        run: Rscript -e 'install.packages("rtweet", dependencies = TRUE)'
+        run: R -e 'install.packages("rtweet")'
       - name: Create and post tweet
         run: Rscript brainyquotebot-tweet.R
