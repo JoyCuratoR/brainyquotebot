@@ -1,3 +1,4 @@
+
 library(rvest)
 library(dplyr)
 library(rtweet)
@@ -20,28 +21,32 @@ quote_author <- page %>%
                concat( " ", "oncl_a", " " ))]') %>%
   html_text()
 
+tags <- c("#quoteoftheday #InspirationalQuotes #quotestoliveby #quotesdaily")
 
-full <- paste0(quote_title, quote_content, quote_author)
+full <- paste0(quote_title, quote_content, quote_author, tags)
 
 cleaned <- gsub('\n', " ", 
-           gsub('Quote of the Day', "Quote of the Day |", full))
+           gsub('Quote of the Day', "Quote of the Day |",
+           gsub ('#quoteoftheday', " | #quoteoftheday", full)))
+cleaned
 
 
-
-# create the tweet's text
+# create the tweet's text/content
 tweet_text <- paste0(cleaned)
+tweet_text
 
 # Create a token containing your Twitter keys
 bot_token <- rtweet::create_token(
   app = "brainyquotebot",
   # the name of the Twitter app
-  consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
-  consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_SECRET"),
-  access_token = Sys.getenv("TWITTER_ACCESS_TOKEN"),
-  access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET"),
+  consumer_key = "INSERT_YOUR_KEY",
+  consumer_secret = "INSERT_YOUR_KEY",
+  access_token = "INSERT_YOUR_KEY",
+  access_secret = "INSERT_YOUR_KEY",
   set_renv = FALSE
 )
 
 # post tweet
 post_tweet(status = tweet_text,
            token = bot_token)
+
