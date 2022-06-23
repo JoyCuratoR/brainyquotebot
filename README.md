@@ -6,7 +6,7 @@ Huge thank you to Matt Dray for providing the tutorial and basic framework for t
 Even before beginning my data analytics journey, automation has always fascinated me. Building an automated Twitter bot isn't anything complex in terms of what can be automated but it's a simple start. In this tutorial, we'll be building a bot that scrapes HTML nodes from a site called Brainy Quote and use Windows Task Scheduler to automate posting on Twitter.  
 
 # Step 1: Install & Load Packages
-Please note that along with the necessary packages, you'll also need to have a [selector tool](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en).
+Please note that along with the necessary packages, you'll also need to have a CSS [selector tool](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en).
 ``` r
 library(rvest)
 library(dplyr)
@@ -35,20 +35,24 @@ Click on the actual quote, it should highlight the quote in green with a red box
 What's happening now is that Selector Gadget wants us to specify exactly which HTML nodes we want and to do that we will click on the yellow parts - the parts we don't want. After specifying the parts we don't want the extension to grab, only the quote we clicked on is highlighted green, the rest of the quotes that have the same HTML node is highlighted yellow and the section where we said we don't want is highlighted in red. Sometimes we may have to click on more yellow parts to specify further to the extension which parts we don't need.
 
 Finally, we'll end up with a specific HTML node that appears in the bottom right corner box (see arrow).
+  
 ![screenshot 40](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(40).png)
 
 ## Extracting nodes
-Next, we want to get the HTML node's XPath and to do this we click on the Xpath button.
+Next, we want to get the HTML node's XPath and to do this we click on the Xpath button (see arrow).
+
 ![screenshot 40.1](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(40.1).png)
 
 Once we do that a box will pop up. 
+
 ![screenshot 41](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(41).png)
 
 We'll copy the XPath to use in our script. 
+
 ![screenshot 42](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(42).png)
 
 # Step 4: Creating the individual parts of the tweet
-Now that we have our copied XPath, we're going to create a variable called ``` quote_content ```
+Now that we have our copied XPath, we're going to create a variable called ``` quote_content ```. We're using the function ```html_element``` instead of its plural counterpart ```html_elements``` because with the singluar ```html_element``` we're specifying out of all the parts of the page that have this particular HTML node, we only want to return this one. Remember how the other quotes were highlighted yellow after excluding the parts we didn't want? Had we gone ahead and copied the HTML node instead of the XPath and used the function ```html_elements``` we would've returned all the highlighted quotes instead of just one.
 ``` r
 quote_content <- page %>%
   html_element(xpath = '//*[contains(concat( " ", @class, " " ),
