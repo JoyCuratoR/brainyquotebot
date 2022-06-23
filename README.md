@@ -165,4 +165,4 @@ And lastly, in ```Start in``` we'll set the path of where we can find our Rscrip
 Then, click OK all the way through and exit out of the program.
 
 # The End
-That was a lot but now we have a fully functioning automated Twitter bot that we can let it run without a worry. If you want to check out my bot go to: @Sunshinecatleo or follow me @joycuratoR on Twitter and GitHub to see what I'm working on next.
+That was a lot but now we have a fully functioning automated Twitter bot that we can let it run without a worry. If you want to check out my bot go to: [@Sunshinecatleo](https://twitter.com/SunshinecatLeo) or follow me @joycuratoR on [Twitter](https://twitter.com/joycuratoR) and [GitHub](https://github.com/JoyCuratoR) to see what I'm working on next.
