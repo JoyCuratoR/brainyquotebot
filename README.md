@@ -3,7 +3,9 @@
 Huge thank you to Matt Dray for providing the tutorial and basic framework for this project, I wouldn't have known where to start. You can find the guide and documentation [here](https://github.com/matt-dray/londonmapbot). Additionally, the idea to build a bot that webscrapes content instead of using an API came from this [repo](https://github.com/TimTeaFan/rstatspkgbot) and the [guide](https://rpubs.com/mccannecology/54352) I used to help me with Task Scheduler.
 
 # The Premise 
-Even before beginning my data analytics journey, automation has always fascinated me. Building an automated Twitter bot isn't anything complex in terms of what can be automated but it's a simple start. In this tutorial, we'll be building a bot that scrapes HTML nodes from a site called Brainy Quote and use Windows Task Scheduler to automate posting on Twitter.  There's two main components to how this works: we create an Rscript file that scrapes the necessary content then we schedule a task through Windows Task Scheduler to automatically post our tweet.
+Even before beginning my data analytics journey, automation has always fascinated me. Building an automated Twitter bot isn't anything complex in terms of what can be automated but it's a simple start. In this tutorial, we'll be building a bot that scrapes HTML nodes from a site called Brainy Quote and use Windows Task Scheduler to automate posting on Twitter.  
+
+There's two main components to how this works: we create an Rscript file that scrapes the necessary content then we schedule a task through Windows Task Scheduler to automatically post our tweet.
 
 # Before You Begin
 This tutorial is assuming that you already have a Twitter Developer account, Elevated Access to Twitter's API and have changed your app/project's permissions to Read and Write as well as have generated your API tokens. For more information on how to do this, please [go here](
@@ -136,16 +138,18 @@ Next, let's create the command to post our tweet.
 post_tweet(status = tweet_text,
            token = bot_token)
 ```
+We can check if the programming works by running the entire script. If it's successful, the message returned will indicate that our post has been published and if we go to our Twitter account, we'll see the tweet. 
+
 # Step 7: Automating with Windows Task Scheduler
 Open up the Windows Start button and in the search bar type ```Task Scheduler```. Once we've opened it up, on the side bar we'll click on ```Create Task```. 
 
 ![screenshot 43](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(43).png)
 
-In the ```General``` tab, give the task a name and check the ```Run only when user is logged on```.
+In the ```General``` tab, give the task a name and check the ```Run only when user is logged on```. Click OK.
 
 ![screenshot 44](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(44).png)
 
-Then go to the ```Triggers``` tab, click new, and make sure to begin the task ```On Schedule```. For my bot, I wanted it to run once everyday at a specific time, but you can choose weekly or monthly and define which days you want this task to run. 
+Then go to the ```Triggers``` tab, click new, and make sure to begin the task ```On Schedule```. For my bot, I wanted it to run once everyday at a specific time, but you can choose weekly or monthly and define which days you want this task to run. Click OK.
 
 ![screenshot 45](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(45).png)
 
@@ -157,4 +161,9 @@ In ```Add Arguments``` input what the name of our Rscript is, in my case, I name
 
 And lastly, in ```Start in``` we'll set the path of where we can find our Rscript - my path was ```D:\R_Studio\Project_Vault\OP_TwitterBot\```
 
+![screenshot 46](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(46).png)
+
 Then, click OK all the way through and exit out of the program.
+
+# The End
+That was a lot but now we have a fully functioning automated Twitter bot that we can let it run without a worry.
