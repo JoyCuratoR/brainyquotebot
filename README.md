@@ -20,14 +20,32 @@ page <- read_html(link)
 ```
 # Step 3: Extracting the HTML nodes
 We'll be extracting the first quote using a selector tool [chrome extension](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en). 
+
+![screenshot 37](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(37).png)
+
 ## A basic rundown of how to use the Selector Gadget extension
 Once you've installed it as an extension, click on the icon to open it up. A thin white box should appear on the lower right corner of your screen. Additionally, where your mouse is on the screen, there should be an orange box highlighting a part of the page. 
 
+![screenshot 38](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(38).png)
+
 Click on the actual quote, it should highlight the quote in green with a red box outlining it. The rest of the page is highlighted yellow.
 
-What's happening now is that Selector Gadget wants us to specify exactly which HTML nodes we want and to do that we will click on the yellow parts - the parts we don't want. After specifying the parts we don't want the extension to grab, only the quote we clicked on is highlighted green and the rest of the quotes that have the same HTML node is highlighted yellow. The section where we said we don't want is highlighted in red.
+![screenshot 39](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(39).png)
 
-Next, we want to copy the HTML node that shows up in the box at the bottom right corner. After we've copied the node, we'll go back into our R script and write these next lines.
+What's happening now is that Selector Gadget wants us to specify exactly which HTML nodes we want and to do that we will click on the yellow parts - the parts we don't want. After specifying the parts we don't want the extension to grab, only the quote we clicked on is highlighted green, the rest of the quotes that have the same HTML node is highlighted yellow and the section where we said we don't want is highlighted in red. Sometimes you may have to click on more yellow parts to help the extension know exactly what you want to keep.
+
+![screenshot 40](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(40).png)
+
+## Extracting nodes
+Next, we want to get the HTML node's XPath and to do this we click on the Xpath button.
+![screenshot 40.1](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(40.1).png)
+
+Once we do that a box will pop up. 
+![screenshot 41](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(41).png)
+
+We'll copy the XPath to use in our script. 
+![screenshot 42](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(42).png)
+
 ``` r
 quote_title <- page %>%
   html_element(xpath = '//*[contains(concat( " ", @class, " " ),
