@@ -1,6 +1,6 @@
 # Brainy Quote Automated Twitter Bot
 
-Huge thank you to Matt Dray for providing the tutorial and basic framework for this project, I wouldn't have known where to start. You can find the guide and documentation [here](https://github.com/matt-dray/londonmapbot). Additionally, the idea to build a bot that webscrapes content instead of using an API came from this repo [here](https://github.com/TimTeaFan/rstatspkgbot). 
+Huge thank you to Matt Dray for providing the tutorial and basic framework for this project, I wouldn't have known where to start. You can find the guide and documentation [here](https://github.com/matt-dray/londonmapbot). Additionally, the idea to build a bot that webscrapes content instead of using an API came from this repo [here](https://github.com/TimTeaFan/rstatspkgbot) and the guide I used to help me with Task Scheduler is [here](https://rpubs.com/mccannecology/54352).
 
 ## The Premise 
 Even before beginning my data analytics journey, automation has always fascinated me. Building an automated Twitter bot isn't anything complex in terms of what can be automated but it's a simple start. In this tutorial, we'll be building a bot that scrapes HTML nodes from a site called Brainy Quote and use Windows Task Scheduler to automate posting on Twitter.  
@@ -109,7 +109,8 @@ cleaned <- gsub('\n', " ",
            gsub ('#quoteoftheday', " | #quoteoftheday", full)))
 cleaned
 ```
-What we'll get is this 
+What we'll get is this:
+
 ```>"Quote of the Day | Hope is being able to see that there is light despite all of the darkness. Desmond Tutu | #quoteoftheday #InspirationalQuotes #quotestoliveby #quotesdaily"```
 # Step 6: Communicating with Twitter's API
 Finally, we use our Twitter Tokens but first let's define what the content of our tweet is. 
@@ -135,3 +136,5 @@ Next, let's create the command to post our tweet.
 post_tweet(status = tweet_text,
            token = bot_token)
 ```
+# Step 7: Automating with Windows Task Scheduler
+Open up the Windows Start button and in the search bar type ```Task Scheduler```. Once we've opened it up, on the side bar we'll click on ```Create Task```. 
