@@ -13,7 +13,7 @@ library(dplyr)
 library(rtweet)
 ```
 # Step 2: Establish Website Link & Read the HTML
-We'll copy the link of the site we want to scrape from, in this case it's Brainy Quote's 'Quote of the Day' page, and create a variable called link. Then we'll create a second variable called page using the function ``` read_html ``` that reads the page's HTML.
+We'll copy the link of the site we want to scrape from, in this case it's Brainy Quote's 'Quote of the Day' page, and create a variable called ``` link```. Then we'll create a second variable called ```page``` using the function ``` read_html ``` that reads the page's HTML.
 ``` r
 link <- "https://www.brainyquote.com/quote_of_the_day"
 page <- read_html(link)
@@ -32,8 +32,9 @@ Click on the actual quote, it should highlight the quote in green with a red box
 
 ![screenshot 39](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(39).png)
 
-What's happening now is that Selector Gadget wants us to specify exactly which HTML nodes we want and to do that we will click on the yellow parts - the parts we don't want. After specifying the parts we don't want the extension to grab, only the quote we clicked on is highlighted green, the rest of the quotes that have the same HTML node is highlighted yellow and the section where we said we don't want is highlighted in red. Sometimes you may have to click on more yellow parts to help the extension know exactly what you want to keep.
+What's happening now is that Selector Gadget wants us to specify exactly which HTML nodes we want and to do that we will click on the yellow parts - the parts we don't want. After specifying the parts we don't want the extension to grab, only the quote we clicked on is highlighted green, the rest of the quotes that have the same HTML node is highlighted yellow and the section where we said we don't want is highlighted in red. Sometimes we may have to click on more yellow parts to specify further to the extension which parts we don't need.
 
+Finally, we'll end up with a specific HTML node that appears in the bottom right corner box (see arrow).
 ![screenshot 40](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(40).png)
 
 ## Extracting nodes
@@ -45,6 +46,15 @@ Once we do that a box will pop up.
 
 We'll copy the XPath to use in our script. 
 ![screenshot 42](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(42).png)
+
+# Step 4: Creating the individual parts of the tweet
+Now that we have our copied XPath, we're going to create a variable called ``` quote_content ```
+``` r
+quote_content <- page %>%
+  html_element(xpath = '//*[contains(concat( " ", @class, " " ),
+               concat( " ", "oncl_q", " " ))]//div') %>%
+  html_text()
+```
 
 ``` r
 quote_title <- page %>%
