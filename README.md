@@ -18,12 +18,12 @@ We'll copy the link of the site we want to scrape from, in this case it's Brainy
 link <- "https://www.brainyquote.com/quote_of_the_day"
 page <- read_html(link)
 ```
-# Step 3: Extracting the HTML nodes
+# Step 3: Extracting the HTML Nodes
 We'll be extracting the first quote using a selector tool [chrome extension](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en). 
 
 ![screenshot 37](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(37).png)
 
-## A basic rundown of how to use the Selector Gadget extension
+## A Basic Rundown of How to Use the Selector Gadget Extension
 Once you've installed it as an extension, click on the icon to open it up. A thin white box should appear on the lower right corner of your screen. Additionally, where your mouse is on the screen, there should be an orange box highlighting a part of the page. 
 
 ![screenshot 38](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(38).png)
@@ -38,7 +38,7 @@ Finally, we'll end up with a specific HTML node that appears in the bottom right
   
 ![screenshot 40](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(40).png)
 
-## Extracting nodes
+## Extracting Nodes
 Next, we want to get the HTML node's XPath and to do this we click on the Xpath button (see arrow).
 
 ![screenshot 40.1](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(40.1).png)
@@ -78,4 +78,33 @@ quote_title <- page %>%
   html_text()
 ```
 ## Quote Author
-Extracting the author of the quote is much of the same process as before. Use the extension 
+Extracting the author of the quote is much of the same process as before. Use the extension to select which HTML node we want, exclude the parts we don't want until all that's highlighted are the ones we need. Click XPath, copy it, and use the following code to extract it.
+
+``` r
+quote_author <- page %>%
+  html_element(xpath = '//*[contains(concat( " ", @class, " " ),
+               concat( " ", "oncl_a", " " ))]') %>%
+  html_text()
+```
+## Tags
+Assuming that we'd want to add Twitter tags to our post, here's how to do it. 
+
+First, let's create a variable called ```tags```, then we use the combine function ```c``` and quotation marks ```"``` to write a string contain the hashtags. 
+``` r
+tags <- c("#quoteoftheday #InspirationalQuotes #quotestoliveby #quotesdaily")
+```
+# Step 5: Piecing it All Together
+We have our individual parts of the tweet, to put it all together, let's create a variable called ```full```.
+``` r
+full <- paste0(quote_title, quote_content, quote_author, tags)
+```
+And then let's do a bit of cleaning. 
+``` r
+cleaned <- gsub('\n', " ", 
+           gsub('Quote of the Day', "Quote of the Day |",
+           gsub ('#quoteoftheday', " | #quoteoftheday", full)))
+cleaned
+```
+What we'll get is this 
+```>"Quote of the Day | Hope is being able to see that there is light despite all of the darkness. Desmond Tutu | #quoteoftheday #InspirationalQuotes #quotestoliveby #quotesdaily"```
+# Step 6: Communicating with Twitter's API
