@@ -52,13 +52,24 @@ We'll copy the XPath to use in our script.
 ![screenshot 42](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(42).png)
 
 # Step 4: Creating the individual parts of the tweet
-Now that we have our copied XPath, we're going to create a variable called ``` quote_content ```. We're using the function ```html_element``` instead of its plural counterpart ```html_elements``` because with the singluar ```html_element``` we're specifying out of all the parts of the page that have this particular HTML node, we only want to return this one. Remember how the other quotes were highlighted yellow after excluding the parts we didn't want? Had we gone ahead and copied the HTML node instead of the XPath and used the function ```html_elements``` we would've returned all the highlighted quotes instead of just one.
+
+## Quote Content
+Now that we have our copied XPath, we're going to create a variable called ``` quote_content ```. 
+
 ``` r
 quote_content <- page %>%
   html_element(xpath = '//*[contains(concat( " ", @class, " " ),
                concat( " ", "oncl_q", " " ))]//div') %>%
   html_text()
 ```
+We're using the function ```html_element``` instead of its plural counterpart ```html_elements``` because with the singluar ```html_element``` we're specifying out of all the quotes that share the same HTML node ```.oncl_q div``` we only want one of them. Had we gone ahead and copied the HTML node ```.oncl_q div``` instead of the XPath and used the function ```html_elements``` we would've returned all the quotes.
+
+## Quote Title
+Let's extract the title next - this part is **optional**.
+
+We'll go back to the Selector Gadget and at the top left corner right under the logo Brainy Quote, we'll click on the ```Quote of the Day``` title. It should be the only part highlighted green. 
+
+Again, we'll click on XPath, copy it, and use the following code to extract it.
 
 ``` r
 quote_title <- page %>%
@@ -66,4 +77,5 @@ quote_title <- page %>%
                concat( " ", "qotd-h2", " " ))]') %>%
   html_text()
 ```
-
+## Quote Author
+Extracting the author of the quote is much of the same process as before. Use the extension 
