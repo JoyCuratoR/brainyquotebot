@@ -5,6 +5,10 @@ Huge thank you to Matt Dray for providing the tutorial and basic framework for t
 ## The Premise 
 Even before beginning my data analytics journey, automation has always fascinated me. Building an automated Twitter bot isn't anything complex in terms of what can be automated but it's a simple start. In this tutorial, we'll be building a bot that scrapes HTML nodes from a site called Brainy Quote and use Windows Task Scheduler to automate posting on Twitter.  
 
+## Before You Begin
+This tutorial is assuming that you already have a Twitter Developer account, Elevated Access to Twitter's API and have changed your app/project's permissions to Read and Write as well as have generated your API tokens. For more information on how to do this, please [go here](
+https://oscarbaruffa.com/twitterbot/).
+
 # Step 1: Install & Load Packages
 Please note that along with the necessary packages, you'll also need to have a CSS [selector tool](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en).
 ``` r
@@ -108,3 +112,26 @@ cleaned
 What we'll get is this 
 ```>"Quote of the Day | Hope is being able to see that there is light despite all of the darkness. Desmond Tutu | #quoteoftheday #InspirationalQuotes #quotestoliveby #quotesdaily"```
 # Step 6: Communicating with Twitter's API
+Finally, we use our Twitter Tokens but first let's define what the content of our tweet is. 
+``` r
+tweet_text <- paste0(cleaned)
+```
+Then let's use the package ```rtweet``` to create a token that holds all of our Twitter Tokens in one variable called ```bot_token```.
+``` r
+bot_token <- rtweet::create_token(
+  app = "brainyquotebot",
+  # the name of the Twitter app
+  consumer_key = "INSERT_YOUR_TOKEN",
+  consumer_secret = "INSERT_YOUR_TOKEN",
+  access_token = "INSERT_YOUR_TOKEN",
+  access_secret = "INSERT_YOUR_TOKEN",
+  set_renv = FALSE
+)
+```
+Please note that the ```Bearer Token``` is not needed for this.
+
+Next, let's create the command to post our tweet. 
+``` r
+post_tweet(status = tweet_text,
+           token = bot_token)
+```
