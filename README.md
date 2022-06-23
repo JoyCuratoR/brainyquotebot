@@ -57,7 +57,7 @@ We'll copy the XPath to use in our script.
 
 ![screenshot 42](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(42).png)
 
-# Step 4: Creating the individual parts of the tweet
+# Step 4: Creating the Individual Parts of the Tweet
 
 ## Quote Content
 Now that we have our copied XPath, we're going to create a variable called ``` quote_content ```. 
@@ -68,7 +68,7 @@ quote_content <- page %>%
                concat( " ", "oncl_q", " " ))]//div') %>%
   html_text()
 ```
-We're using the function ```html_element``` instead of its plural counterpart ```html_elements``` because with the singluar ```html_element``` we're specifying out of all the quotes that share the same HTML node ```.oncl_q div``` we only want one of them. Had we gone ahead and copied the HTML node ```.oncl_q div``` instead of the XPath and used the function ```html_elements``` we would've returned all the quotes.
+We're using the function ```html_element``` instead of its plural counterpart ```html_elements``` because with the singluar ```html_element``` we're determining out of all the quotes that share the same HTML node ```.oncl_q div``` we only want one of them. Had we gone ahead and copied the HTML node ```.oncl_q div``` instead of the XPath and used the function ```html_elements``` we would've returned all the quotes highlighted in yellow.
 
 ## Quote Title
 Let's extract the title next - this part is **optional**.
@@ -84,7 +84,7 @@ quote_title <- page %>%
   html_text()
 ```
 ## Quote Author
-Extracting the author of the quote is much of the same process as before. Use the extension to select which HTML node we want, exclude the parts we don't want until all that's highlighted are the ones we need. Click XPath, copy it, and use the following code to extract it.
+Extracting the author of the quote is much of the same process as before. Use the extension to select which HTML node we want, exclude the parts we don't want until all that's highlighted in green and yellow are the ones we need. Click XPath, copy it, and use the following code to extract it.
 
 ``` r
 quote_author <- page %>%
@@ -95,12 +95,12 @@ quote_author <- page %>%
 ## Tags
 Assuming that we'd want to add Twitter tags to our post, here's how to do it. 
 
-First, let's create a variable called ```tags```, then we use the combine function ```c``` and quotation marks ```"``` to write a string contain the hashtags. 
+First, let's create a variable called ```tags```, then we use the combine function ```c``` and quotation marks ```"``` to write a string containing the hashtags. 
 ``` r
 tags <- c("#quoteoftheday #InspirationalQuotes #quotestoliveby #quotesdaily")
 ```
 # Step 5: Piecing it All Together
-We have our individual parts of the tweet, to put it all together, let's create a variable called ```full```.
+To put it all together, let's create a variable called ```full```.
 ``` r
 full <- paste0(quote_title, quote_content, quote_author, tags)
 ```
@@ -115,15 +115,14 @@ What we'll get is this:
 
 ```>"Quote of the Day | Hope is being able to see that there is light despite all of the darkness. Desmond Tutu | #quoteoftheday #InspirationalQuotes #quotestoliveby #quotesdaily"```
 # Step 6: Communicating with Twitter's API
-Finally, we use our Twitter Tokens but first let's define what the content of our tweet is. 
+Finally, we'll use our Twitter Tokens but first let's define to the API what the content of our tweet is. 
 ``` r
 tweet_text <- paste0(cleaned)
 ```
-Then let's use the package ```rtweet``` to create a token that holds all of our Twitter Tokens in one variable called ```bot_token```.
+Then using use the package ```rtweet```, create a token that holds all of the Twitter Tokens in one variable called ```bot_token```.
 ``` r
 bot_token <- rtweet::create_token(
   app = "brainyquotebot",
-  # the name of the Twitter app
   consumer_key = "INSERT_YOUR_TOKEN",
   consumer_secret = "INSERT_YOUR_TOKEN",
   access_token = "INSERT_YOUR_TOKEN",
@@ -157,13 +156,13 @@ Next, go to the ```Actions``` tab, click new, and set ```Action:``` to ```Start 
 
 Then in ```Program/Script``` we'll want to set the path of where we can find our ```Rscript.exe```. Mine, for instance, was found here ```D:\R\R-4.1.2\bin\Rscript.exe```.
 
-In ```Add Arguments``` input what the name of our Rscript is, in my case, I named mine ```brainyquotebot_tweet```.
+In ```Add Arguments``` input what the name of our Rscript file is, in my case, I named mine ```brainyquotebot_tweet```.
 
-And lastly, in ```Start in``` we'll set the path of where we can find our Rscript - my path was ```D:\R_Studio\Project_Vault\OP_TwitterBot\```
+And lastly, in ```Start in``` we'll set the path of where we can find our Rscript file - my path was ```D:\R_Studio\Project_Vault\OP_TwitterBot\```
 
 ![screenshot 46](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(46).png)
 
 Then, click OK all the way through and exit out of the program.
 
 # The End
-That was a lot but now we have a fully functioning automated Twitter bot that we can let it run without a worry.
+That was a lot but now we have a fully functioning automated Twitter bot that we can let it run without a worry. If you want to check out my bot go to: @Sunshinecatleo or follow me @joycuratoR on Twitter and GitHub to see what I'm working on next.
