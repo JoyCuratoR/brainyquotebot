@@ -1,16 +1,16 @@
 # Brainy Quote Automated Twitter Bot
 
-Huge thank you to Matt Dray for providing the tutorial and basic framework for this project, I wouldn't have known where to start. You can find the guide and documentation [here](https://github.com/matt-dray/londonmapbot). Additionally, the idea to build a bot that webscrapes content instead of using an API came from this repo [here](https://github.com/TimTeaFan/rstatspkgbot) and the guide I used to help me with Task Scheduler is [here](https://rpubs.com/mccannecology/54352).
+Huge thank you to Matt Dray for providing the tutorial and basic framework for this project, I wouldn't have known where to start. You can find the guide and documentation [here](https://github.com/matt-dray/londonmapbot). Additionally, the idea to build a bot that webscrapes content instead of using an API came from this [repo](https://github.com/TimTeaFan/rstatspkgbot) and the [guide](https://rpubs.com/mccannecology/54352) I used to help me with Task Scheduler.
 
-## The Premise 
-Even before beginning my data analytics journey, automation has always fascinated me. Building an automated Twitter bot isn't anything complex in terms of what can be automated but it's a simple start. In this tutorial, we'll be building a bot that scrapes HTML nodes from a site called Brainy Quote and use Windows Task Scheduler to automate posting on Twitter.  
+# The Premise 
+Even before beginning my data analytics journey, automation has always fascinated me. Building an automated Twitter bot isn't anything complex in terms of what can be automated but it's a simple start. In this tutorial, we'll be building a bot that scrapes HTML nodes from a site called Brainy Quote and use Windows Task Scheduler to automate posting on Twitter.  There's two main components to how this works: we create an Rscript file that scrapes the necessary content then we schedule a task through Windows Task Scheduler to automatically post our tweet.
 
-## Before You Begin
+# Before You Begin
 This tutorial is assuming that you already have a Twitter Developer account, Elevated Access to Twitter's API and have changed your app/project's permissions to Read and Write as well as have generated your API tokens. For more information on how to do this, please [go here](
 https://oscarbaruffa.com/twitterbot/).
 
-# Step 1: Install & Load Packages
-Please note that along with the necessary packages, you'll also need to have a CSS [selector tool](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en).
+# Step 1: Writing the Rscript (Install & Load Packages)
+Please note that along with the necessary packages, you'll also need to have a [CSS selector tool](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en).
 ``` r
 library(rvest)
 library(dplyr)
@@ -23,7 +23,7 @@ link <- "https://www.brainyquote.com/quote_of_the_day"
 page <- read_html(link)
 ```
 # Step 3: Extracting the HTML Nodes
-We'll be extracting the first quote using a selector tool [chrome extension](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en). 
+We'll be extracting the first quote using the selector tool chrome extension. 
 
 ![screenshot 37](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(37).png)
 
@@ -32,7 +32,7 @@ Once you've installed it as an extension, click on the icon to open it up. A thi
 
 ![screenshot 38](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(38).png)
 
-Click on the actual quote, it should highlight the quote in green with a red box outlining it. The rest of the page is highlighted yellow.
+Click on the text of the quote, it should highlight the words in green with a red box outlining it while the rest of the page is highlighted yellow.
 
 ![screenshot 39](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(39).png)
 
@@ -138,3 +138,23 @@ post_tweet(status = tweet_text,
 ```
 # Step 7: Automating with Windows Task Scheduler
 Open up the Windows Start button and in the search bar type ```Task Scheduler```. Once we've opened it up, on the side bar we'll click on ```Create Task```. 
+
+![screenshot 43](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(43).png)
+
+In the ```General``` tab, give the task a name and check the ```Run only when user is logged on```.
+
+![screenshot 44](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(44).png)
+
+Then go to the ```Triggers``` tab, click new, and make sure to begin the task ```On Schedule```. For my bot, I wanted it to run once everyday at a specific time, but you can choose weekly or monthly and define which days you want this task to run. 
+
+![screenshot 45](https://github.com/JoyCuratoR/brainyquotebot/blob/master/Screenshot%20(45).png)
+
+Next, go to the ```Actions``` tab, click new, and set ```Action:``` to ```Start a Program```. 
+
+Then in ```Program/Script``` we'll want to set the path of where we can find our ```Rscript.exe```. Mine, for instance, was found here ```D:\R\R-4.1.2\bin\Rscript.exe```.
+
+In ```Add Arguments``` input what the name of our Rscript is, in my case, I named mine ```brainyquotebot_tweet```.
+
+And lastly, in ```Start in``` we'll set the path of where we can find our Rscript - my path was ```D:\R_Studio\Project_Vault\OP_TwitterBot\```
+
+Then, click OK all the way through and exit out of the program.
